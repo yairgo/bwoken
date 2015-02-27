@@ -16,7 +16,8 @@ describe Bwoken::CLI::Test do
         end
 
         it 'should use passthru' do
-          expect(formatters).to be_kind_of(Bwoken::PassthruFormatter)
+          expect(formatters.length).to be(1)
+          expect(formatters.first).to be_kind_of(Bwoken::PassthruFormatter)
         end
       end
 
@@ -27,7 +28,8 @@ describe Bwoken::CLI::Test do
           end
 
           it 'should use colorful' do
-            expect(formatters).to be_kind_of(Bwoken::ColorfulFormatter)
+            expect(formatters.length).to be(1)
+            expect(formatters.first).to be_kind_of(Bwoken::ColorfulFormatter)
           end
         end
 
@@ -37,7 +39,8 @@ describe Bwoken::CLI::Test do
           end
 
           it 'should use passthru' do
-            expect(formatters).to be_kind_of(Bwoken::PassthruFormatter)
+            expect(formatters.length).to be(1)
+            expect(formatters.first).to be_kind_of(Bwoken::PassthruFormatter)
           end
         end
       end
@@ -46,7 +49,7 @@ describe Bwoken::CLI::Test do
   end
 
   def formatters
-    subject.options[:formatter]
+    subject.options[:formatter].recipients
   end
 
 end

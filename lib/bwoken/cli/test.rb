@@ -8,6 +8,7 @@ require 'bwoken/coffeescript'
 require 'bwoken/device'
 #TODO: make formatters dynamically loadable during runtime
 require 'bwoken/formatter'
+require 'bwoken/formatters/fanout_formatter'
 require 'bwoken/formatters/passthru_formatter'
 require 'bwoken/formatters/colorful_formatter'
 require 'bwoken/script_runner'
@@ -54,8 +55,11 @@ BANNER
       def initialize opts
         opts = opts.to_hash if opts.is_a?(Slop)
         self.options = opts.to_hash.tap do |o|
-          o[:formatter] = 'passthru' if o[:verbose]
-          o[:formatter] = select_formatter(o[:formatter])
+          output_format_type = o[:verbose] ? 'passthru' : o[:formatter]
+          formatter = Bwoken::FanoutFormatter.new
+          formatter.add_recipient(select_formatter(output_format_type))
+
+          o[:formatter] = formatter
           o[:simulator] = use_simulator?(o[:simulator])
           o[:family] = o[:family]
         end
