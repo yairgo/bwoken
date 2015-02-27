@@ -11,6 +11,7 @@ require 'bwoken/formatter'
 require 'bwoken/formatters/fanout_formatter'
 require 'bwoken/formatters/passthru_formatter'
 require 'bwoken/formatters/colorful_formatter'
+require 'bwoken/formatters/junit_formatter'
 require 'bwoken/script_runner'
 
 module Bwoken
@@ -44,6 +45,7 @@ BANNER
       #       :flags            - custom build flag array (default: []) TODO: not yet implmented
       #       :focus            - which tests to run (default: [], meaning "all")
       #       :formatter        - custom formatter (default: 'colorful')
+      #       :junit            - create junit xml test results
       #       :scheme           - custom scheme (default: nil)
       #       :simulator        - should force simulator use (default: nil)
       #       :skip-build       - do not build the iOS binary
@@ -58,6 +60,7 @@ BANNER
           output_format_type = o[:verbose] ? 'passthru' : o[:formatter]
           formatter = Bwoken::FanoutFormatter.new
           formatter.add_recipient(select_formatter(output_format_type))
+          formatter.add_recipient(Bwoken::JUnitFormatter.new) if o[:junit]
 
           o[:formatter] = formatter
           o[:simulator] = use_simulator?(o[:simulator])

@@ -45,6 +45,16 @@ describe Bwoken::CLI::Test do
         end
       end
 
+      context 'when junit' do
+        before do
+          options[:junit] = true
+        end
+
+        it 'should use passthru' do
+          expect(formatters.length).to be(2)
+          expect(formatters.last).to be_kind_of(Bwoken::JUnitFormatter)
+        end
+      end
     end
   end
 
