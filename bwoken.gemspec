@@ -23,8 +23,10 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'execjs'
   gem.add_dependency 'json_pure'
   gem.add_dependency 'rake'
-  gem.add_dependency 'slop'
+  gem.add_dependency 'slop', '~> 3.6.0'
+  gem.add_dependency 'nokogiri'
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'guard-rspec'
+  gem.add_development_dependency 'nokogiri'
 end
