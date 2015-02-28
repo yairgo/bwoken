@@ -63,20 +63,20 @@ module Bwoken
     end
 
 
-    on :complete do |line,formatter|
+    on :complete do |line|
       tokens = line.split(' ')
-      test_suite = formatter.test_suites.last
+      test_suite = self.test_suites.last
       test_suite.time = tokens[5].sub(';', '')
     end
 
-    on :debug do |line, formatter|
+    on :debug do |line|
       filtered_line = line.sub(/(target\.frontMostApp.+)\.tap\(\)/, "#{'tap'} \\1")
       filtered_line = filtered_line.gsub(/\[("[^\]]*")\]/, "[" + '\1' + "]")
       filtered_line = filtered_line.gsub('()', '')
       filtered_line = filtered_line.sub(/target.frontMostApp.(?:mainWindow.)?/, '')
       tokens = filtered_line.split(' ')
 
-      test_suite = formatter.test_suites.last
+      test_suite = self.test_suites.last
       test_case = test_suite.test_cases.last
 
       if test_case
@@ -84,11 +84,11 @@ module Bwoken
       end
     end
 
-    on :error do |line,formatter|
+    on :error do |line|
       @failed = true
       tokens = line.split(' ')
 
-      test_suite = formatter.test_suites.last
+      test_suite = self.test_suites.last
       test_case = test_suite.test_cases.last
       if test_case
         test_case.complete
@@ -99,11 +99,11 @@ module Bwoken
 
     end
 
-    on :fail do |line,formatter|
+    on :fail do |line|
       @failed = true
       tokens = line.split(' ')
 
-      test_suite = formatter.test_suites.last
+      test_suite = self.test_suites.last
       test_case = test_suite.test_cases.last
       if test_case
         test_case.complete
@@ -114,10 +114,10 @@ module Bwoken
 
     end
 
-    on :start do |line,formatter|
+    on :start do |line|
       tokens = line.split(' ')
 
-      suite = formatter.test_suites.last
+      suite = self.test_suites.last
       if suite
         test_case = Bwoken::JUnitTestCase.new
         test_case.name = tokens[4..-1].join(' ')
@@ -129,17 +129,17 @@ module Bwoken
       end
     end
 
-    on :pass do |line,formatter|
+    on :pass do |line|
       tokens = line.split(' ')
 
-      test_case = formatter.test_suites.last.test_cases.last
+      test_case = self.test_suites.last.test_cases.last
       if test_case
         test_case.complete
         test_case.error = nil
       end
     end
 
-    on :before_script_run do |path, formatter|
+    on :before_script_run do |path|
       tokens = path.split('/')
 
       new_suite = Bwoken::JUnitTestSuite.new
@@ -147,9 +147,9 @@ module Bwoken
       new_suite.host_name = tokens[-2]
       new_suite.name = tokens[-1]
       new_suite.package = new_suite.name
-      new_suite.id = formatter.test_suites.count + 1
+      new_suite.id = self.test_suites.count + 1
 
-      formatter.test_suites << new_suite
+      self.test_suites << new_suite
 
       @failed = false
     end
@@ -158,11 +158,11 @@ module Bwoken
       print "Building"
     end
 
-    on :build_line do |line,formatter|
+    on :build_line do |line|
       print '.'
     end
 
-    on :build_successful do |line,formatter|
+    on :build_successful do |line|
       puts
       puts 'Build Successful!'
     end
@@ -174,7 +174,7 @@ module Bwoken
       puts 'Build failed!'
     end
 
-    on :other do |line,formatter|
+    on :other do |line|
       nil
     end
 

@@ -47,7 +47,7 @@ describe Bwoken::JUnitFormatter do
     it 'increments tests counter when a test is run' do
       formatter = Bwoken::JUnitFormatter.new
       formatter.test_suites = [Bwoken::JUnitTestSuite.new]
-      formatter._on_start_callback('2013-10-25 16:10:01 +0000 Start: test one', formatter)
+      formatter._on_start_callback('2013-10-25 16:10:01 +0000 Start: test one')
       expect(formatter.test_suites[0].tests).to eq(1)
     end
 
@@ -57,7 +57,7 @@ describe Bwoken::JUnitFormatter do
       test_case = Bwoken::JUnitTestCase.new
       test_case.start_time = Time.now
       formatter.test_suites[0].test_cases = [test_case]
-      formatter._on_fail_callback('2013-10-25 16:10:01 +0000 Fail: login', formatter)
+      formatter._on_fail_callback('2013-10-25 16:10:01 +0000 Fail: login')
       expect(formatter.test_suites[0].failures).to eq(1)
     end
 
@@ -67,7 +67,7 @@ describe Bwoken::JUnitFormatter do
       test_case = Bwoken::JUnitTestCase.new
       test_case.start_time = Time.now
       formatter.test_suites[0].test_cases = [test_case]
-      formatter._on_error_callback('2013-10-25 16:10:01 +0000 Error: login', formatter)
+      formatter._on_error_callback('2013-10-25 16:10:01 +0000 Error: login')
       expect(formatter.test_suites[0].errors).to eq(1)
     end
   end
