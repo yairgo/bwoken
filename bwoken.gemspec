@@ -24,7 +24,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'json_pure'
   gem.add_dependency 'rake'
   gem.add_dependency 'slop', '~> 3.6.0'
-  gem.add_dependency 'nokogiri'
+  gem.add_dependency 'nokogiri', '~> 1.6.5'
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'guard-rspec'

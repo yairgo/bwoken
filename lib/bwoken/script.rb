@@ -48,18 +48,19 @@ module Bwoken
       if !device.nil?
         return "-w \"#{device}\""
       end
-      
+
       simulator ? '' : "-w #{Bwoken::Device.uuid}"
     end
 
     def run
       formatter.before_script_run path
-
+      exit_status = 0
       Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
         exit_status = formatter.format stdout
-        raise ScriptFailedError.new('Test Script Failed') unless exit_status == 0
+        break unless exit_status == 0
       end
+      formatter.after_script_run
+      raise ScriptFailedError.new('Test Script Failed') unless exit_status == 0
     end
-
   end
 end

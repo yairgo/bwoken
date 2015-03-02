@@ -56,12 +56,9 @@ module Bwoken
       self.test_suites = []
     end
 
-    def format stdout
-      exit_status = super stdout
+    on :after_script_run do
       generate_report
-      exit_status
     end
-
 
     on :complete do |line|
       tokens = line.split(' ')
@@ -154,30 +151,9 @@ module Bwoken
       @failed = false
     end
 
-    on :before_build_start do
-      print "Building"
-    end
-
-    on :build_line do |line|
-      print '.'
-    end
-
-    on :build_successful do |line|
-      puts
-      puts 'Build Successful!'
-    end
-
-    on :build_failed do |build_log, error_log|
-      puts build_log
-      puts 'Standard Error:'
-      puts error_log
-      puts 'Build failed!'
-    end
-
     on :other do |line|
       nil
     end
-
 
     def generate_report
       doc = Nokogiri::XML::Document.new()
