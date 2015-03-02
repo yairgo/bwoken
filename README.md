@@ -116,6 +116,7 @@ $ bwoken test -h
         --configuration         The build configruation to use (e.g., --configuration=Release)
         --sdk-version           The SDK version to use (e.g., --sdk-version=6.1)
         --verbose               Be verbose
+        --junit                 To output results in junit xml format
     -h, --help                  Display this help message.
 </code></pre>
 
