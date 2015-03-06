@@ -24,28 +24,5 @@ module Bwoken
       end
     end
 
-
-    on :before_build_start do
-      puts 'Building'
-    end
-
-    on :build_line do |line|
-      print '.'
-    end
-
-    on :build_successful do |build_log|
-      puts
-      puts
-      puts "### Build Successful ###"
-      puts
-    end
-
-    on :build_failed do |build_log, error_log|
-      puts build_log
-      puts "Standard Error:"
-      puts error_log
-      puts '## Build failed ##'
-    end
-
   end
 end

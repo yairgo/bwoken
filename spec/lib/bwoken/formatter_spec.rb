@@ -28,35 +28,4 @@ describe Bwoken::Formatter do
     end
   end
 
-  it '#_on_build_line_callback' do
-    out = capture_stdout do
-      subject._on_build_line_callback("a\n")
-    end
-    out.should == '.'
-  end
-
-  it '#_on_build_successful_callback' do
-    out = capture_stdout do
-      subject.build_successful('foo')
-    end
-    out.should == "\n\n### Build Successful ###\n\n"
-  end
-
-  describe '#_on_build_failed_callback' do
-    it 'displays the build_log' do
-      out = capture_stdout do
-        subject._on_build_failed_callback('build', 'bar')
-      end
-      out.should =~ /build/
-    end
-
-    it 'displays the error_log' do
-      out = capture_stdout do
-        subject._on_build_failed_callback('foo', 'error')
-      end
-      out.should =~ /error/
-    end
-
-  end
-
 end

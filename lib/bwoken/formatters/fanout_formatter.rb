@@ -1,3 +1,4 @@
+require 'bwoken/formatters/line_demuxer'
 module Bwoken
 
   # Forwards any messages sent to this object to all recipients
